@@ -1,7 +1,9 @@
 import React from "react";
 import { AppBar, Toolbar, IconButton, Typography, Button } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import HomeIcon from "@mui/icons-material/Home";
 import { styled } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -16,11 +18,23 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 const TopNav = ({ onUpload }) => {
+  const navigate = useNavigate();
+
+  const goHome = () => {
+    navigate("/");
+  };
+
   return (
     <AppBar position="sticky">
       <Toolbar>
-        <IconButton size="large" edge="start" color="inherit" sx={{ mr: 2 }}>
-          <CloudUploadIcon />
+        <IconButton
+          size="large"
+          edge="start"
+          color="inherit"
+          sx={{ mr: 2 }}
+          onClick={goHome}
+        >
+          <HomeIcon />
         </IconButton>
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
           PDF Extractor

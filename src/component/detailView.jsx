@@ -12,7 +12,10 @@ import {
   List,
   ListItem,
   Divider,
+  Breadcrumbs,
+  Link,
 } from "@mui/material";
+import { NavigateNext } from "@mui/icons-material";
 
 const detailDataMap = {
   P001: {
@@ -42,7 +45,47 @@ const detailDataMap = {
     ],
     descriptions: ["Reliable and durable.", "Made for precision."],
     others: ["Limited Edition"],
-  }, // Add P003 similarly
+  },
+  P003: {
+    product: "Product Name 3",
+    features: ["Lightweight", "Eco-Friendly", "Compact"],
+    tables: [
+      [
+        ["Volume", "Material"],
+        ["250ml", "Plastic"],
+      ],
+    ],
+    descriptions: ["Perfect for mobile labs.", "BPA-free design."],
+    others: ["Recyclable", "Patent Pending"],
+  },
+  P004: {
+    product: "Product Name 4",
+    features: ["High Capacity", "Rust Resistant"],
+    tables: [
+      [
+        ["Capacity", "Finish"],
+        ["5L", "Matte Black"],
+      ],
+      [["Certifications"], ["CE, RoHS"]],
+    ],
+    descriptions: ["Built for rugged environments.", "Lasts up to 10 years."],
+    others: ["Includes user manual", "2-year replacement policy"],
+  },
+  P005: {
+    product: "Product Name 5",
+    features: ["Portable", "Multi-Use"],
+    tables: [
+      [
+        ["Function", "Battery Life"],
+        ["Analyzer", "12 hours"],
+      ],
+    ],
+    descriptions: [
+      "Compact analyzer for fieldwork.",
+      "Wireless connectivity included.",
+    ],
+    others: ["Rechargeable", "Includes carrying case"],
+  },
 };
 
 export default function DetailView({ selectedRow, onBack }) {
@@ -53,16 +96,38 @@ export default function DetailView({ selectedRow, onBack }) {
 
   return (
     <Box sx={{ p: 3 }}>
+      <Breadcrumbs
+        separator={<NavigateNext fontSize="small" />}
+        aria-label="breadcrumb"
+      >
+        <Link
+          underline="hover"
+          color="inherit"
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            onBack();
+          }}
+        >
+          Products
+        </Link>
+        <Typography color="text.primary">{data.product}</Typography>
+      </Breadcrumbs>
            
       <Typography variant="h6" gutterBottom>
                 {data.product}     
       </Typography>
-           
-      <Button variant="outlined" onClick={onBack} sx={{ mb: 2 }}>
-                Back to Table      
-      </Button>
-           
+                 
       <Box display={"flex"} flexDirection={"row"}>
+        {data.image && (
+          <Box sx={{ minWidth: 150, maxWidth: 200 }}>
+            <img
+              src={data.image}
+              alt={data.product}
+              style={{ width: "100%", borderRadius: 8 }}
+            />
+          </Box>
+        )}
         {data.features?.length > 0 && (
           <>
                       <Typography variant="subtitle1">Features:</Typography>   
