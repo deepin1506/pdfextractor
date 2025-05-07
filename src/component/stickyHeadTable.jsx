@@ -40,7 +40,7 @@ export default function StickyHeadTable({ rows }) {
   const handleRowClick = async (row) => {
     try {
       const response = await fetch(
-        "http://192.168.29.39:8000/api/datagetbyname",
+        "http://192.168.1.18:8000/api/datagetbyname",
         {
           method: "POST",
           headers: {

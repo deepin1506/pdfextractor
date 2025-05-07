@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { CssBaseline, Container } from "@mui/material";
+import {
+  CssBaseline,
+  Container,
+  LinearProgress, // Import this
+} from "@mui/material";
 import TopNav from "./component/topNav";
 import StickyHeadTable from "./component/stickyHeadTable";
 
@@ -10,7 +14,7 @@ function App() {
   const fetchTableData = async () => {
     try {
       setLoading(true);
-      const res = await fetch("http://192.168.29.39:8000/api/datagetall", {
+      const res = await fetch("http://192.168.1.18:8000/api/datagetall", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -26,6 +30,7 @@ function App() {
       setTableData(data);
     } catch (error) {
       console.error("Error fetching table data:", error);
+      setLoading(false);
     } finally {
       setLoading(false);
     }
@@ -42,7 +47,7 @@ function App() {
     try {
       const filePath = `D:/Downloads/Example/${files[0].name}`;
       const uploadRes = await fetch(
-        "http://192.168.29.39:8000/api/dataextract",
+        "http://192.168.1.18:8000/api/dataextract",
         {
           method: "POST",
           headers: {
@@ -57,7 +62,6 @@ function App() {
       }
 
       console.log("File upload successful");
-      // Fetch updated data after upload
       await fetchTableData();
     } catch (error) {
       console.error("Upload or data fetch failed", error);
@@ -66,15 +70,13 @@ function App() {
 
   return (
     <>
-      <CssBaseline />
-      <TopNav onUpload={handleFileUpload} />
+            <CssBaseline />
+            <TopNav onUpload={handleFileUpload} />     
+      {loading && <LinearProgress />}
       <Container sx={{ mt: 4 }}>
-        {loading ? (
-          <p>Loading data...</p>
-        ) : (
-          <StickyHeadTable rows={tableData} />
-        )}
+                <StickyHeadTable rows={tableData} />     
       </Container>
+         
     </>
   );
 }
