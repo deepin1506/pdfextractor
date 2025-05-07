@@ -99,11 +99,18 @@ export default function StickyHeadTable({ rows }) {
                     >
                            
                       {columns.map((column) => (
-                        <TableCell key={column.id}>
-                                   
-                          {column.render ? column.render(row) : row[column.id]} 
-                               
-                        </TableCell>
+                        <TableCell
+                        key={column.id}
+                        sx={{
+                          textAlign: "left",
+                          verticalAlign: "middle",
+                          whiteSpace: "normal",
+                          wordBreak: "break-word",
+                        }}
+                      >
+                        {column.render ? column.render(row) : row[column.id]}
+                      </TableCell>
+                      
                       ))}
                          
                     </TableRow>

@@ -22,8 +22,9 @@ export default function DetailView({ selectedRow, onBack }) {
   const [loading, setLoading] = useState(false);
 
   if (!selectedRow) return null;
-  const originalData = selectedRow[0];
-
+  // const originalData = selectedRow[0];
+  const rowData = selectedRow[0]
+  const originalData = [rowData]
   const handleTranslate = async () => {
     setLoading(true);
     try {
@@ -179,7 +180,7 @@ export default function DetailView({ selectedRow, onBack }) {
           >
             Products
           </Link>
-          <Typography color="text.primary">{originalData.product}</Typography>
+          <Typography color="text.primary">{rowData.product}</Typography>
         </Breadcrumbs>
 
         <Button variant="outlined" onClick={handleTranslate} disabled={loading}>
@@ -192,13 +193,13 @@ export default function DetailView({ selectedRow, onBack }) {
         alignItems="center"
         my={2}
       >
-                <Typography variant="h6">{originalData.product}</Typography>   
+                <Typography variant="h6">{rowData.product}</Typography>   
                  
       </Box>
            
       <Box display="flex" flexDirection={{ xs: "column", md: "row" }} gap={4}>
-                {renderDataSection(originalData, "Original")}       
-        {loading && !translatedData.length ? (
+                {renderDataSection(rowData, "Original")}       
+        {loading && !translatedData ? (
           <Box
             display="flex"
             alignItems="center"
@@ -208,7 +209,7 @@ export default function DetailView({ selectedRow, onBack }) {
                         <CircularProgress />         
           </Box>
         ) : (
-          translatedData.length &&
+          translatedData &&
           renderDataSection(translatedData[0], "Translated")
         )}
              
