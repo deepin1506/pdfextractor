@@ -21,7 +21,7 @@ const columns = [
   },
   {
     id: "features",
-    label: "Long Description",
+    label: "Features",
     minWidth: 170,
     render: (row) => row.features?.slice(0, 2).join(", ") + "..." || "-",
   },
