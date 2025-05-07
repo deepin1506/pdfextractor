@@ -16,6 +16,7 @@ import {
   CircularProgress,
   LinearProgress,
   Skeleton,
+  Tooltip,
 } from "@mui/material";
 import { NavigateNext } from "@mui/icons-material";
 
@@ -53,87 +54,85 @@ export default function DetailView({ selectedRow, onBack }) {
 
     return (
       <Box sx={{ flex: 1, px: 2 }}>
-               
-        <Typography fontWeight={"bold"} variant="h3" gutterBottom>
-                    {title}       
+
+        <Typography fontWeight={"bold"} variant="h5" gutterBottom>
+          {title}
         </Typography>
-               
+
         {data.image && (
           <Box sx={{ minWidth: 150, maxWidth: 200 }}>
-                       
+
             <img
               src={data.image}
               alt={data.product}
               style={{ width: "100%", borderRadius: 8 }}
             />
-                     
+
           </Box>
         )}
-               
+
         {data.descriptions?.length > 0 && (
           <>
-                       
+
             <Typography fontWeight={"bold"} variant="subtitle1">
               Description:
             </Typography>
-                       
+
             <List>
-                           
+
               {data.descriptions.map((desc, i) => (
                 <ListItem key={i} sx={{ pl: 2 }}>
                   {desc}
                 </ListItem>
               ))}
-                         
+
             </List>
-                        <Divider />         
+            <Divider />
           </>
         )}
-               
+
         {data.features?.length > 0 && (
           <>
-                       
             <Typography fontWeight={"bold"} variant="subtitle1">
               Features:
             </Typography>
-                       
-            <List>
-                           
+
+            <ul style={{ paddingLeft: "1.5rem", marginTop: 0 }}>
               {data.features.map((f, i) => (
-                <ListItem key={i} sx={{ pl: 2 }}>
-                  {f}
-                </ListItem>
+                <li key={i} style={{ marginBottom: "0.5rem" }}>
+                  <Typography variant="body2" component="span">{f}</Typography>
+                </li>
               ))}
-                         
-            </List>
-                        <Divider />         
+            </ul>
+            <Divider />
           </>
         )}
-               
+
+
         {data.others?.length > 0 && (
           <>
-                       
+
             <Typography fontWeight={"bold"} variant="subtitle1">
               Other Info:
             </Typography>
-                       
+
             <List>
-                           
+
               {data.others.map((o, i) => (
                 <ListItem key={i} sx={{ pl: 2 }}>
                   {o}
                 </ListItem>
               ))}
-                         
+
             </List>
-                     
+
           </>
         )}
-               
+
         {data.tables?.map((table, tIdx) => (
           <Box key={tIdx} sx={{ mb: 2 }}>
-            <Typography variant="subtitle1" gutterBottom>
-              Table {tIdx + 1}:
+            <Typography fontWeight={"bold"} variant="subtitle1" gutterBottom>
+              Specification:
             </Typography>
 
             <TableContainer sx={{ border: "1px solid #ccc", borderRadius: 1 }}>
@@ -171,21 +170,20 @@ export default function DetailView({ selectedRow, onBack }) {
             </TableContainer>
           </Box>
         ))}
-             
+
       </Box>
     );
   };
 
   return (
     <Box sx={{ p: 3, boxShadow: 4 }}>
-           
+
       <Box
         display="flex"
         justifyContent="space-between"
         alignItems="center"
         flexWrap="wrap"
         gap={2}
-        mb={2}
       >
         <Breadcrumbs
           separator={<NavigateNext fontSize="small" />}
@@ -204,24 +202,27 @@ export default function DetailView({ selectedRow, onBack }) {
           </Link>
           <Typography color="text.primary">{rowData.product}</Typography>
         </Breadcrumbs>
+        <Tooltip title="Translate to Thai">
 
-        <Button variant="outlined" onClick={handleTranslate} disabled={loading}>
-          {loading ? <CircularProgress size={20} /> : "Translate"}
-        </Button>
+          <Button variant="outlined" onClick={handleTranslate} disabled={loading}>
+            {loading ? <CircularProgress size={20} /> : "Translate"}
+            <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0GUdVA-xvlpyTWlcAZYHuK1QmuPnnLzQUmK9Ppq0IGocU6SfuAP8preBl_lpM6VCDX0g&usqp=CAU' alt="flag" style={{ height: 30, background: 'white' }} />
+
+          </Button>
+        </Tooltip>
       </Box>
       {loading && <LinearProgress />}
       <Box
         display="flex"
         justifyContent="space-between"
         alignItems="center"
-        my={2}
       >
-                <Typography variant="h6">{rowData.product}</Typography>         
-           
+        <Typography marginLeft="150px" marginTop='50px' fontWeight="bold" variant="h5">{rowData.product}</Typography>
+
       </Box>
-           
+
       <Box display="flex" flexDirection={{ xs: "column", md: "row" }} gap={4}>
-          {renderDataSection(rowData, translatedData ? "English" : null)} 
+        {renderDataSection(rowData, translatedData ? "English" : null)}
         {translatedData && (
           <Divider
             orientation="vertical"
@@ -229,25 +230,32 @@ export default function DetailView({ selectedRow, onBack }) {
             sx={{ display: { xs: "none", md: "block" } }}
           />
         )}
-         
+
         {loading && !translatedData ? (
           <Box flex={1}>
-                 
+
             <Typography variant="h6" gutterBottom>
-                      Translated      
+              Translating
             </Typography>
-                  <Skeleton variant="rectangular" height={180} sx={{ mb: 2 }} />
-                  <Skeleton variant="text" width="60%" />
-                  <Skeleton variant="text" width="80%" />
-                  <Skeleton variant="text" width="40%" />
-                  <Skeleton variant="rectangular" height={120} sx={{ mt: 2 }} />
-               
+            <Skeleton variant="rectangular" height={180} sx={{ mb: 2 }} />
+            <Skeleton variant="text" width="60%" />
+            <Skeleton variant="text" width="80%" />
+            <Skeleton variant="rectangular" height={180} sx={{ mb: 2 }} />
+            <Skeleton variant="text" width="40%" />
+            <Skeleton variant="text" width="40%" />
+            <Skeleton variant="text" width="40%" />
+            <Skeleton variant="rectangular" height={180} sx={{ mb: 2 }} />
+            <Skeleton variant="text" width="40%" />
+            <Skeleton variant="text" width="80%" />
+            <Skeleton variant="rectangular" height={120} sx={{ mt: 2 }} />
+            <Skeleton variant="rectangular" height={120} sx={{ mt: 2 }} />
+
           </Box>
         ) : (
           translatedData && renderDataSection(translatedData[0], "Thai")
         )}
       </Box>
-         
+
     </Box>
   );
 }

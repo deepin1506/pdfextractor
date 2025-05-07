@@ -1,9 +1,10 @@
 import React from "react";
-import { AppBar, Toolbar, IconButton, Typography, Button } from "@mui/material";
+import { AppBar, Toolbar, IconButton, Typography, Button, Box } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import HomeIcon from "@mui/icons-material/Home";
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
+import { LogoPG } from "./image/logo-TF.png"
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -27,18 +28,11 @@ const TopNav = ({ onUpload }) => {
   return (
     <AppBar position="sticky">
       <Toolbar>
-        <IconButton
-          size="large"
-          edge="start"
-          color="inherit"
-          sx={{ mr: 2 }}
-          onClick={goHome}
-        >
-          <HomeIcon />
-        </IconButton>
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          PDF Extractor
-        </Typography>
+        <img src="https://www.mama.co.th/en/images/logo-TF.png" alt="logo" style={{ height: 40,background: 'white', marginRight: 16 }} />
+        <Box
+          sx={{ flexGrow: 1 }}
+
+        />
         <Button
           component="label"
           variant="contained"
