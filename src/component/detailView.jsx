@@ -15,6 +15,7 @@ import {
   Link,
   CircularProgress,
   LinearProgress,
+  Skeleton,
 } from "@mui/material";
 import { NavigateNext } from "@mui/icons-material";
 
@@ -53,7 +54,7 @@ export default function DetailView({ selectedRow, onBack }) {
     return (
       <Box sx={{ flex: 1, px: 2 }}>
                
-        <Typography variant="h6" gutterBottom>
+        <Typography fontWeight={"bold"} variant="h3" gutterBottom>
                     {title}       
         </Typography>
                
@@ -72,8 +73,10 @@ export default function DetailView({ selectedRow, onBack }) {
         {data.descriptions?.length > 0 && (
           <>
                        
-            <Typography variant="subtitle1">Descriptions:</Typography>         
-             
+            <Typography fontWeight={"bold"} variant="subtitle1">
+              Description:
+            </Typography>
+                       
             <List>
                            
               {data.descriptions.map((desc, i) => (
@@ -83,14 +86,17 @@ export default function DetailView({ selectedRow, onBack }) {
               ))}
                          
             </List>
-                        <Divider sx={{ my: 2 }} />         
+                        <Divider />         
           </>
         )}
                
         {data.features?.length > 0 && (
           <>
-                        <Typography variant="subtitle1">Features:</Typography> 
-                     
+                       
+            <Typography fontWeight={"bold"} variant="subtitle1">
+              Features:
+            </Typography>
+                       
             <List>
                            
               {data.features.map((f, i) => (
@@ -100,13 +106,16 @@ export default function DetailView({ selectedRow, onBack }) {
               ))}
                          
             </List>
-                        <Divider sx={{ my: 2 }} />         
+                        <Divider />         
           </>
         )}
                
         {data.others?.length > 0 && (
           <>
-                        <Typography variant="subtitle1">Other Info:</Typography>
+                       
+            <Typography fontWeight={"bold"} variant="subtitle1">
+              Other Info:
+            </Typography>
                        
             <List>
                            
@@ -212,7 +221,7 @@ export default function DetailView({ selectedRow, onBack }) {
       </Box>
            
       <Box display="flex" flexDirection={{ xs: "column", md: "row" }} gap={4}>
-          {renderDataSection(rowData, "Original")} 
+          {renderDataSection(rowData, translatedData ? "English" : null)} 
         {translatedData && (
           <Divider
             orientation="vertical"
@@ -222,16 +231,20 @@ export default function DetailView({ selectedRow, onBack }) {
         )}
          
         {loading && !translatedData ? (
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            flex={1}
-          >
-                  <CircularProgress />   
+          <Box flex={1}>
+                 
+            <Typography variant="h6" gutterBottom>
+                      Translated      
+            </Typography>
+                  <Skeleton variant="rectangular" height={180} sx={{ mb: 2 }} />
+                  <Skeleton variant="text" width="60%" />
+                  <Skeleton variant="text" width="80%" />
+                  <Skeleton variant="text" width="40%" />
+                  <Skeleton variant="rectangular" height={120} sx={{ mt: 2 }} />
+               
           </Box>
         ) : (
-          translatedData && renderDataSection(translatedData[0], "Translated")
+          translatedData && renderDataSection(translatedData[0], "Thai")
         )}
       </Box>
          

@@ -64,30 +64,51 @@ export default function StickyHeadTable({ rows }) {
   const handleBackClick = () => setSelectedRow(null);
 
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden" }}>
+    <Paper
+      sx={{
+        width: "100%",
+        overflow: "hidden",
+        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+        borderRadius: 2,
+        border: "1px solid #e0e0e0",
+      }}
+    >
+           
       {selectedRow ? (
         <DetailView selectedRow={selectedRow} onBack={handleBackClick} />
       ) : (
         <>
+                   
           <TableContainer sx={{ maxHeight: 600 }}>
+                       
             <Table stickyHeader aria-label="sticky table">
+                           
               <TableHead>
-                 
+                               
                 <TableRow>
-                     
+                                   
                   {columns.map((column) => (
                     <TableCell
                       key={column.id}
-                      style={{ minWidth: column.minWidth, fontWeight: "bold" }}
+                      style={{
+                        minWidth: column.minWidth,
+                        fontWeight: "bold",
+                        backgroundColor: "#f5f5f5",
+                        borderBottom: "1px solid #ddd",
+                        textAlign: "center",
+                        verticalAlign: "top",
+                      }}
                     >
-                              {column.label}     
+                        {column.label}
                     </TableCell>
                   ))}
-                   
+                                 
                 </TableRow>
+                             
               </TableHead>
-
+                           
               <TableBody>
+                               
                 {rows
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, idx) => (
@@ -95,29 +116,40 @@ export default function StickyHeadTable({ rows }) {
                       hover
                       key={idx}
                       onClick={() => handleRowClick(row)}
-                      style={{ cursor: "pointer" }}
+                      sx={{
+                        cursor: "pointer",
+                        "&:hover": {
+                          backgroundColor: "#f9f9f9",
+                        },
+                      }}
                     >
-                           
+                                           
                       {columns.map((column) => (
                         <TableCell
-                        key={column.id}
-                        sx={{
-                          textAlign: "left",
-                          verticalAlign: "middle",
-                          whiteSpace: "normal",
-                          wordBreak: "break-word",
-                        }}
-                      >
-                        {column.render ? column.render(row) : row[column.id]}
-                      </TableCell>
-                      
+                          key={column.id}
+                          sx={{
+                            textAlign: "left",
+                            verticalAlign: "top",
+                            whiteSpace: "normal",
+                            wordBreak: "break-word",
+                            borderBottom: "1px solid #eee",
+                          }}
+                        >
+                                                   
+                          {column.render ? column.render(row) : row[column.id]} 
+                                               
+                        </TableCell>
                       ))}
-                         
+                                         
                     </TableRow>
                   ))}
+                             
               </TableBody>
+                         
             </Table>
+                     
           </TableContainer>
+                   
           <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
             component="div"
@@ -127,8 +159,10 @@ export default function StickyHeadTable({ rows }) {
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
+                 
         </>
       )}
+         
     </Paper>
   );
 }
