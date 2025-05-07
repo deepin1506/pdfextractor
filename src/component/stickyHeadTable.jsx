@@ -12,9 +12,19 @@ import {
 import DetailView from "./detailView";
 
 const columns = [
-  { id: "productNumber", label: "Product Name", minWidth: 170 },
-  { id: "shortDescription", label: "Short Description", minWidth: 100 },
-  { id: "longDescription", label: "Long Description", minWidth: 170 },
+  { id: "product", label: "Product Name", minWidth: 170 },
+  {
+    id: "descriptions",
+    label: "Short Description",
+    minWidth: 100,
+    render: (row) => row.descriptions?.[0] || "-",
+  },
+  {
+    id: "features",
+    label: "Long Description",
+    minWidth: 170,
+    render: (row) => row.features?.slice(0, 2).join(", ") + "..." || "-",
+  },
 ];
 
 export default function StickyHeadTable({ rows }) {
@@ -27,7 +37,30 @@ export default function StickyHeadTable({ rows }) {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  const handleRowClick = (row) => setSelectedRow(row);
+  const handleRowClick = async (row) => {
+    try {
+      const response = await fetch(
+        "http://192.168.29.39:8000/api/datagetbyname",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ product: row.product }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      setSelectedRow(data);
+    } catch (error) {
+      console.error("Error fetching row detail:", error);
+    }
+  };
+
   const handleBackClick = () => setSelectedRow(null);
 
   return (
@@ -39,17 +72,21 @@ export default function StickyHeadTable({ rows }) {
           <TableContainer sx={{ maxHeight: 600 }}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
+                 
                 <TableRow>
+                     
                   {columns.map((column) => (
                     <TableCell
                       key={column.id}
                       style={{ minWidth: column.minWidth, fontWeight: "bold" }}
                     >
-                      {column.label}
+                              {column.label}     
                     </TableCell>
                   ))}
+                   
                 </TableRow>
               </TableHead>
+
               <TableBody>
                 {rows
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -60,9 +97,15 @@ export default function StickyHeadTable({ rows }) {
                       onClick={() => handleRowClick(row)}
                       style={{ cursor: "pointer" }}
                     >
+                           
                       {columns.map((column) => (
-                        <TableCell key={column.id}>{row[column.id]}</TableCell>
+                        <TableCell key={column.id}>
+                                   
+                          {column.render ? column.render(row) : row[column.id]} 
+                               
+                        </TableCell>
                       ))}
+                         
                     </TableRow>
                   ))}
               </TableBody>

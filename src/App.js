@@ -38,27 +38,46 @@ function App() {
     const files = e.target.files;
     if (!files || files.length === 0) return;
 
-    const formData = new FormData();
-    formData.append("file", files[0]);
-
     try {
-      const uploadRes = await fetch("http://localhost:5000/upload", {
-        method: "POST",
-        body: formData,
-      });
-      const { filePath } = await uploadRes.json();
+      const filePath = `D:/Downloads/Example/${files[0].name}`; // First POST: Send file path to /dataextract
 
-      const dataRes = await fetch("http://localhost:5000/extract-data", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ path: filePath }),
-      });
-      const productData = await dataRes.json();
+      const uploadRes = await fetch(
+        "http://192.168.29.39:8000/api/dataextract",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ path: filePath }),
+        }
+      );
 
-      console.log("Extracted product data:", productData);
-      setTableData(productData);
+      if (!uploadRes.ok) {
+        throw new Error("File path upload failed");
+      }
+
+      const uploadData = await uploadRes;
+      console.log("File upload response:", uploadData);
+
+      const dataGetRes = await fetch(
+        "http://192.168.29.39:8000/api/datagetall",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!dataGetRes.ok) {
+        throw new Error("Data fetch failed");
+      }
+
+      const data = await dataGetRes.json();
+      console.log("Extracted data:", data);
+      setTableData(data);
     } catch (error) {
-      console.error("Upload or data extraction failed", error);
+      console.error("Upload or data fetch failed", error);
     }
   };
 

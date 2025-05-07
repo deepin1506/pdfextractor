@@ -91,7 +91,7 @@ const detailDataMap = {
 export default function DetailView({ selectedRow, onBack }) {
   if (!selectedRow) return null;
 
-  const data = detailDataMap[selectedRow.productNumber];
+  const data = selectedRow[0];
   if (!data) return <Typography>No details found.</Typography>;
 
   return (
@@ -118,7 +118,7 @@ export default function DetailView({ selectedRow, onBack }) {
                 {data.product}     
       </Typography>
                  
-      <Box display={"flex"} flexDirection={"row"}>
+      <Box display={"flex"} flexDirection={"column"}>
         {data.image && (
           <Box sx={{ minWidth: 150, maxWidth: 200 }}>
             <img
@@ -128,19 +128,7 @@ export default function DetailView({ selectedRow, onBack }) {
             />
           </Box>
         )}
-        {data.features?.length > 0 && (
-          <>
-                      <Typography variant="subtitle1">Features:</Typography>   
-            <List>
-              {data.features.map((f, i) => (
-                <ListItem key={i} sx={{ pl: 2 }}>
-                  {f}
-                </ListItem>
-              ))}
-            </List>
-                      <Divider sx={{ my: 2 }} /> 
-          </>
-        )}
+
         {data.descriptions?.length > 0 && (
           <>
                       <Typography variant="subtitle1">Descriptions:</Typography>
@@ -148,6 +136,19 @@ export default function DetailView({ selectedRow, onBack }) {
               {data.descriptions.map((desc, i) => (
                 <ListItem key={i} sx={{ pl: 2 }}>
                   {desc}
+                </ListItem>
+              ))}
+            </List>
+                      <Divider sx={{ my: 2 }} /> 
+          </>
+        )}
+        {data.features?.length > 0 && (
+          <>
+                      <Typography variant="subtitle1">Features:</Typography>   
+            <List>
+              {data.features.map((f, i) => (
+                <ListItem key={i} sx={{ pl: 2 }}>
+                  {f}
                 </ListItem>
               ))}
             </List>
