@@ -14,6 +14,7 @@ import {
   Breadcrumbs,
   Link,
   CircularProgress,
+  LinearProgress,
 } from "@mui/material";
 import { NavigateNext } from "@mui/icons-material";
 
@@ -23,8 +24,8 @@ export default function DetailView({ selectedRow, onBack }) {
 
   if (!selectedRow) return null;
   // const originalData = selectedRow[0];
-  const rowData = selectedRow[0]
-  const originalData = [rowData]
+  const rowData = selectedRow[0];
+  const originalData = [rowData];
   const handleTranslate = async () => {
     setLoading(true);
     try {
@@ -122,31 +123,43 @@ export default function DetailView({ selectedRow, onBack }) {
                
         {data.tables?.map((table, tIdx) => (
           <Box key={tIdx} sx={{ mb: 2 }}>
-                       
-            <Typography variant="subtitle1">Table {tIdx + 1}:</Typography>     
-                 
-            <TableContainer>
-                           
-              <Table size="small">
-                               
+            <Typography variant="subtitle1" gutterBottom>
+              Table {tIdx + 1}:
+            </Typography>
+
+            <TableContainer sx={{ border: "1px solid #ccc", borderRadius: 1 }}>
+              <Table
+                size="small"
+                sx={{
+                  minWidth: 300,
+                  borderCollapse: "collapse",
+                }}
+              >
                 <TableBody>
-                                   
                   {table.map((row, rIdx) => (
-                    <TableRow key={rIdx}>
-                                           
+                    <TableRow
+                      key={rIdx}
+                      sx={{ borderBottom: "1px solid #ddd" }}
+                    >
                       {row.map((cell, cIdx) => (
-                        <TableCell key={cIdx}>{cell}</TableCell>
+                        <TableCell
+                          key={cIdx}
+                          sx={{
+                            border: "1px solid #ccc",
+                            textAlign: "justify",
+                            verticalAlign: "top",
+                            px: 2,
+                            py: 1,
+                          }}
+                        >
+                          {cell}
+                        </TableCell>
                       ))}
-                                         
                     </TableRow>
                   ))}
-                                 
                 </TableBody>
-                             
               </Table>
-                         
             </TableContainer>
-                     
           </Box>
         ))}
              
@@ -155,7 +168,7 @@ export default function DetailView({ selectedRow, onBack }) {
   };
 
   return (
-    <Box sx={{ p: 3 }}>
+    <Box sx={{ p: 3, boxShadow: 4 }}>
            
       <Box
         display="flex"
@@ -187,18 +200,27 @@ export default function DetailView({ selectedRow, onBack }) {
           {loading ? <CircularProgress size={20} /> : "Translate"}
         </Button>
       </Box>
+      {loading && <LinearProgress />}
       <Box
         display="flex"
         justifyContent="space-between"
         alignItems="center"
         my={2}
       >
-                <Typography variant="h6">{rowData.product}</Typography>   
-                 
+                <Typography variant="h6">{rowData.product}</Typography>         
+           
       </Box>
            
       <Box display="flex" flexDirection={{ xs: "column", md: "row" }} gap={4}>
-                {renderDataSection(rowData, "Original")}       
+          {renderDataSection(rowData, "Original")} 
+        {translatedData && (
+          <Divider
+            orientation="vertical"
+            flexItem
+            sx={{ display: { xs: "none", md: "block" } }}
+          />
+        )}
+         
         {loading && !translatedData ? (
           <Box
             display="flex"
@@ -206,13 +228,11 @@ export default function DetailView({ selectedRow, onBack }) {
             justifyContent="center"
             flex={1}
           >
-                        <CircularProgress />         
+                  <CircularProgress />   
           </Box>
         ) : (
-          translatedData &&
-          renderDataSection(translatedData[0], "Translated")
+          translatedData && renderDataSection(translatedData[0], "Translated")
         )}
-             
       </Box>
          
     </Box>
