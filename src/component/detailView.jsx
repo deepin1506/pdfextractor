@@ -28,7 +28,7 @@ export default function DetailView({ selectedRow, onBack }) {
     setLoading(true);
     try {
       const response = await fetch(
-        "http://192.168.1.18:8000/api/datatranslation",
+        "http://127.0.0.1:8000/api/datatranslation",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -36,6 +36,7 @@ export default function DetailView({ selectedRow, onBack }) {
         }
       );
       const result = await response.json();
+      console.log("result", result);
       setTranslatedData(result);
     } catch (error) {
       console.error("Translation failed:", error);
@@ -155,27 +156,36 @@ export default function DetailView({ selectedRow, onBack }) {
   return (
     <Box sx={{ p: 3 }}>
            
-      <Breadcrumbs
-        separator={<NavigateNext fontSize="small" />}
-        aria-label="breadcrumb"
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        flexWrap="wrap"
+        gap={2}
+        mb={2}
       >
-               
-        <Link
-          underline="hover"
-          color="inherit"
-          href="#"
-          onClick={(e) => {
-            e.preventDefault();
-            onBack();
-          }}
+        <Breadcrumbs
+          separator={<NavigateNext fontSize="small" />}
+          aria-label="breadcrumb"
         >
-                    Products        
-        </Link>
-               
-        <Typography color="text.primary">{originalData.product}</Typography>   
-         
-      </Breadcrumbs>
-           
+          <Link
+            underline="hover"
+            color="inherit"
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              onBack();
+            }}
+          >
+            Products
+          </Link>
+          <Typography color="text.primary">{originalData.product}</Typography>
+        </Breadcrumbs>
+
+        <Button variant="outlined" onClick={handleTranslate} disabled={loading}>
+          {loading ? <CircularProgress size={20} /> : "Translate"}
+        </Button>
+      </Box>
       <Box
         display="flex"
         justifyContent="space-between"
@@ -183,17 +193,12 @@ export default function DetailView({ selectedRow, onBack }) {
         my={2}
       >
                 <Typography variant="h6">{originalData.product}</Typography>   
-           
-        <Button variant="outlined" onClick={handleTranslate} disabled={loading}>
-                    {loading ? <CircularProgress size={20} /> : "Translate"}   
-             
-        </Button>
-             
+                 
       </Box>
            
       <Box display="flex" flexDirection={{ xs: "column", md: "row" }} gap={4}>
                 {renderDataSection(originalData, "Original")}       
-        {loading && !translatedData ? (
+        {loading && !translatedData.length ? (
           <Box
             display="flex"
             alignItems="center"
@@ -203,7 +208,8 @@ export default function DetailView({ selectedRow, onBack }) {
                         <CircularProgress />         
           </Box>
         ) : (
-          translatedData && renderDataSection(translatedData, "Translated")
+          translatedData.length &&
+          renderDataSection(translatedData[0], "Translated")
         )}
              
       </Box>

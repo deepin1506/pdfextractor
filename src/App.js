@@ -43,7 +43,7 @@ function App() {
   const handleFileUpload = async (e) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
-
+    setLoading(true);
     try {
       const filePath = `D:/Downloads/Example/${files[0].name}`;
       const uploadRes = await fetch(
@@ -65,6 +65,7 @@ function App() {
       await fetchTableData();
     } catch (error) {
       console.error("Upload or data fetch failed", error);
+      setLoading(false);
     }
   };
 
