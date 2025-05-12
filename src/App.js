@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   CssBaseline,
   Container,
@@ -15,12 +15,15 @@ function App() {
     try {
       setLoading(true);
       // const res = await fetch("http://127.0.0.1:8000/api/datagetall", {
-      const res = await fetch("https://pdfextractor-bknd-v1-1.onrender.com/api/datagetall", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const res = await fetch(
+        "https://pdfextractor-bknd-v1-1.onrender.com/api/datagetall",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!res.ok) {
         throw new Error("Failed to fetch table data");

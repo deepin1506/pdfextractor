@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   Paper,
   Table,
@@ -13,13 +12,19 @@ import DetailView from "./detailView";
 import { render } from "@testing-library/react";
 
 const columns = [
-  { id: "productnumber", label: "Product#", minWidth: 170,
-    render:(row)=>row.productnumber?row.productnumber:"N/A"
-   },
+  {
+    id: "productnumber",
+    label: "Product#",
+    minWidth: 170,
+    render: (row) => (row.productnumber ? row.productnumber : "N/A"),
+  },
   { id: "product", label: "Product Name", minWidth: 170 },
-  { id: "brand", label: "Brand", minWidth: 170,
-    render:(row)=>row.brand?row.brand:"N/A"
-   },
+  {
+    id: "brand",
+    label: "Brand",
+    minWidth: 170,
+    render: (row) => (row.brand ? row.brand : "N/A"),
+  },
   {
     id: "descriptions",
     label: "Short Description",
@@ -81,20 +86,15 @@ export default function StickyHeadTable({ rows }) {
         border: "1px solid #e0e0e0",
       }}
     >
-
       {selectedRow ? (
         <DetailView selectedRow={selectedRow} onBack={handleBackClick} />
       ) : (
         <>
-{/* <div style={{ height: '100vh', width: '100vw', padding: 16, boxSizing: 'border-box' }}> */}
-          <TableContainer sx={{ maxHeight: 600}}>
-
+          {/* <div style={{ height: '100vh', width: '100vw', padding: 16, boxSizing: 'border-box' }}> */}
+          <TableContainer sx={{ maxHeight: 600 }}>
             <Table stickyHeader aria-label="sticky table">
-
               <TableHead>
-
                 <TableRow>
-
                   {columns.map((column) => (
                     <TableCell
                       key={column.id}
@@ -110,13 +110,10 @@ export default function StickyHeadTable({ rows }) {
                       {column.label}
                     </TableCell>
                   ))}
-
                 </TableRow>
-
               </TableHead>
 
               <TableBody>
-
                 {rows
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, idx) => (
@@ -131,7 +128,6 @@ export default function StickyHeadTable({ rows }) {
                         },
                       }}
                     >
-
                       {columns.map((column) => (
                         <TableCell
                           key={column.id}
@@ -144,24 +140,28 @@ export default function StickyHeadTable({ rows }) {
                           }}
                         >
                           {column.id === "product" ? (
-                            <span style={{ color: "#1976d2", textDecoration: "underline", fontWeight: 500 }}>
+                            <span
+                              style={{
+                                color: "#1976d2",
+                                textDecoration: "underline",
+                                fontWeight: 500,
+                              }}
+                            >
                               {row[column.id]}
                             </span>
-                          ) : column.render ? column.render(row) : row[column.id]}
+                          ) : column.render ? (
+                            column.render(row)
+                          ) : (
+                            row[column.id]
+                          )}
                         </TableCell>
                       ))}
-
-
-
                     </TableRow>
                   ))}
-
               </TableBody>
-
             </Table>
-
           </TableContainer>
-{/* </div> */}
+          {/* </div> */}
           <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
             component="div"
@@ -171,11 +171,8 @@ export default function StickyHeadTable({ rows }) {
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
-
         </>
       )}
-
     </Paper>
   );
 }
-
