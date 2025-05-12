@@ -1,10 +1,17 @@
 import React from "react";
-import { AppBar, Toolbar, IconButton, Typography, Button, Box } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Button,
+  Box,
+} from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import HomeIcon from "@mui/icons-material/Home";
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import { LogoPG } from "./image/logo-TF.png"
+import { LogoPG } from "./image/logo-TF.png";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -19,23 +26,15 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 const TopNav = ({ onUpload }) => {
-  const navigate = useNavigate();
-
-  const goHome = () => {
-    navigate("/");
-  };
-
   return (
     <AppBar position="sticky">
-      <Toolbar><IconButton color="inherit" aria-label="home">
-      <HomeIcon />
-      </IconButton>
+      <Toolbar>
+        <IconButton color="inherit" aria-label="home">
+          <HomeIcon />
+        </IconButton>
         PDF Extractor
         {/* <img src="https://www.mama.co.th/en/images/logo-TF.png" alt="logo" style={{ height: 40,background: 'white', marginRight: 16 }} /> */}
-        <Box
-          sx={{ flexGrow: 1 }}
-
-        />
+        <Box sx={{ flexGrow: 1 }} />
         <Button
           component="label"
           variant="contained"
