@@ -47,7 +47,8 @@ export default function StickyHeadTable({ rows }) {
   const handleRowClick = async (row) => {
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/api/datagetbyname",
+        // "http://127.0.0.1:8000/api/datagetbyname",
+        "https://pdfextractor-bknd-v1-1.onrender.com/api/datagetbyname",
         {
           method: "POST",
           headers: {
