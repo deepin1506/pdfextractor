@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@mui/material";
 import DetailView from "./detailView";
-import { render } from "@testing-library/react";
+import { useState } from "react";
 
 const columns = [
   {
@@ -40,9 +40,9 @@ const columns = [
 ];
 
 export default function StickyHeadTable({ rows }) {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [selectedRow, setSelectedRow] = React.useState(null);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [selectedRow, setSelectedRow] = useState(null);
 
   const handleChangePage = (event, newPage) => setPage(newPage);
   const handleChangeRowsPerPage = (event) => {
