@@ -55,10 +55,30 @@ export default function DetailView({ selectedRow, onBack }) {
     return (
       <Box sx={{ flex: 1, px: 2 }}>
 
-        <Typography fontWeight={"bold"} variant="h5" gutterBottom>
+        {/* <Typography fontWeight={"bold"} variant="h5" gutterBottom>
           {title}
-        </Typography>
-
+        </Typography> */}
+        <Box sx={{ minWidth: 150, maxWidth: 200 }}>
+          <Typography fontWeight={"bold"} variant="subtitle1">
+            Product#:
+          </Typography>
+          <div style={{paddingTop:"8px",paddingBottom:"8px"}}>{data.productnumber ? data.productnumber : "N/A"}</div>
+        </Box>
+        <Divider />
+        <Box sx={{ minWidth: 150, maxWidth: 200 }}>
+          <Typography fontWeight={"bold"} variant="subtitle1">
+            Product Name:
+          </Typography>
+          <div style={{paddingTop:"8px",paddingBottom:"8px"}}>{data.product ? data.product : "N/A"}</div>
+        </Box>
+        <Divider />
+        <Box sx={{ minWidth: 150, maxWidth: 200 }}>
+          <Typography fontWeight={"bold"} variant="subtitle1">
+            Product Brand:
+          </Typography>
+          <div style={{paddingTop:"8px",paddingBottom:"8px"}}>{data.brand ? data.brand : "N/A"}</div>
+        </Box>
+        <Divider />
         {data.image && (
           <Box sx={{ minWidth: 150, maxWidth: 200 }}>
 
@@ -217,7 +237,7 @@ export default function DetailView({ selectedRow, onBack }) {
         justifyContent="space-between"
         alignItems="center"
       >
-        <Typography marginLeft="150px" marginTop='50px' fontWeight="bold" variant="h5">{rowData.product}</Typography>
+        <Typography marginLeft='150px' marginTop='10px' marginBottom='20px' fontWeight="bold" variant="h6">{rowData.product}</Typography>
 
       </Box>
 

@@ -14,7 +14,7 @@ function App() {
   const fetchTableData = async () => {
     try {
       setLoading(true);
-      const res = await fetch("http://192.168.1.18:8000/api/datagetall", {
+      const res = await fetch("http://127.0.0.1:8000/api/datagetall", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -47,7 +47,7 @@ function App() {
     try {
       const filePath = `D:/Downloads/Example/${files[0].name}`;
       const uploadRes = await fetch(
-        "http://192.168.1.18:8000/api/dataextract",
+        "http://127.0.0.1:8000/api/dataextract",
         {
           method: "POST",
           headers: {

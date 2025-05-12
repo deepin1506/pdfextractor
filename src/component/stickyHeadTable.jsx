@@ -10,9 +10,16 @@ import {
   TableRow,
 } from "@mui/material";
 import DetailView from "./detailView";
+import { render } from "@testing-library/react";
 
 const columns = [
+  { id: "productnumber", label: "Product#", minWidth: 170,
+    render:(row)=>row.productnumber?row.productnumber:"N/A"
+   },
   { id: "product", label: "Product Name", minWidth: 170 },
+  { id: "brand", label: "Brand", minWidth: 170,
+    render:(row)=>row.brand?row.brand:"N/A"
+   },
   {
     id: "descriptions",
     label: "Short Description",
@@ -40,7 +47,7 @@ export default function StickyHeadTable({ rows }) {
   const handleRowClick = async (row) => {
     try {
       const response = await fetch(
-        "http://192.168.1.18:8000/api/datagetbyname",
+        "http://127.0.0.1:8000/api/datagetbyname",
         {
           method: "POST",
           headers: {
@@ -78,8 +85,8 @@ export default function StickyHeadTable({ rows }) {
         <DetailView selectedRow={selectedRow} onBack={handleBackClick} />
       ) : (
         <>
-
-          <TableContainer sx={{ maxHeight: 600 }}>
+{/* <div style={{ height: '100vh', width: '100vw', padding: 16, boxSizing: 'border-box' }}> */}
+          <TableContainer sx={{ maxHeight: 600}}>
 
             <Table stickyHeader aria-label="sticky table">
 
@@ -99,7 +106,7 @@ export default function StickyHeadTable({ rows }) {
                         verticalAlign: "top",
                       }}
                     >
-                                            {column.label}                   
+                      {column.label}
                     </TableCell>
                   ))}
 
@@ -124,26 +131,26 @@ export default function StickyHeadTable({ rows }) {
                       }}
                     >
 
-{columns.map((column) => (
-  <TableCell
-    key={column.id}
-    sx={{
-      textAlign: "left",
-      verticalAlign: "top",
-      whiteSpace: "normal",
-      wordBreak: "break-word",
-      borderBottom: "1px solid #eee",
-    }}
-  >
-    {column.id === "product" ? (
-      <span style={{ color: "#1976d2", textDecoration: "underline", fontWeight: 500 }}>
-        {row[column.id]}
-      </span>
-    ) : column.render ? column.render(row) : row[column.id]}
-  </TableCell>
-))}
+                      {columns.map((column) => (
+                        <TableCell
+                          key={column.id}
+                          sx={{
+                            textAlign: "left",
+                            verticalAlign: "top",
+                            whiteSpace: "normal",
+                            wordBreak: "break-word",
+                            borderBottom: "1px solid #eee",
+                          }}
+                        >
+                          {column.id === "product" ? (
+                            <span style={{ color: "#1976d2", textDecoration: "underline", fontWeight: 500 }}>
+                              {row[column.id]}
+                            </span>
+                          ) : column.render ? column.render(row) : row[column.id]}
+                        </TableCell>
+                      ))}
 
- 
+
 
                     </TableRow>
                   ))}
@@ -153,7 +160,7 @@ export default function StickyHeadTable({ rows }) {
             </Table>
 
           </TableContainer>
-
+{/* </div> */}
           <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
             component="div"
@@ -171,4 +178,3 @@ export default function StickyHeadTable({ rows }) {
   );
 }
 
- 

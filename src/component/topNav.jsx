@@ -27,8 +27,11 @@ const TopNav = ({ onUpload }) => {
 
   return (
     <AppBar position="sticky">
-      <Toolbar>
-        <img src="https://www.mama.co.th/en/images/logo-TF.png" alt="logo" style={{ height: 40,background: 'white', marginRight: 16 }} />
+      <Toolbar><IconButton color="inherit" aria-label="home">
+      <HomeIcon />
+      </IconButton>
+        PDF Extractor
+        {/* <img src="https://www.mama.co.th/en/images/logo-TF.png" alt="logo" style={{ height: 40,background: 'white', marginRight: 16 }} /> */}
         <Box
           sx={{ flexGrow: 1 }}
 
