@@ -47,32 +47,34 @@ function App() {
   const handleFileUpload = async (e) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
+
     setLoading(true);
+    const formData = new FormData();
+    formData.append("pdf_file", files[0]);
+
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
+    }
+
     try {
-      // const filePath = `D:/Downloads/Example/${files[0].name}`;
-      const formData = new FormData();
-      formData.append("pdf_file", files[0]);
       const uploadRes = await fetch(
-        // "http://127.0.0.1:8000/api/dataextract",
         "https://pdfextractor-bknd-v1-1.onrender.com/api/dataextract",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          // body: JSON.stringify({ path: filePath }),
           body: formData,
         }
       );
+      console.log("dm formData =>", formData);
 
       if (!uploadRes.ok) {
-        throw new Error("File path upload failed");
+        throw new Error("File upload failed");
       }
 
       console.log("File upload successful");
       await fetchTableData();
     } catch (error) {
       console.error("Upload or data fetch failed", error);
+    } finally {
       setLoading(false);
     }
   };
