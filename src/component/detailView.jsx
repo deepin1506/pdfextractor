@@ -52,61 +52,53 @@ export default function DetailView({ selectedRow, onBack }) {
 
   const renderDataSection = (data, title) => {
     if (!data) return null;
-
+    console.log("dm data =>", data);
     return (
       <Box sx={{ flex: 1, px: 2 }}>
-
         {/* <Typography fontWeight={"bold"} variant="h5" gutterBottom>
           {title}
         </Typography> */}
+
         <Box sx={{ minWidth: 150, maxWidth: 200 }}>
           <Typography fontWeight={"bold"} variant="subtitle1">
             Product#:
           </Typography>
-          <div style={{paddingTop:"8px",paddingBottom:"8px"}}>{data.productnumber ? data.productnumber : "N/A"}</div>
+          <div style={{ paddingTop: "8px", paddingBottom: "8px" }}>
+            {data.productnumber ? data.productnumber : "N/A"}
+          </div>
         </Box>
         <Divider />
         <Box sx={{ minWidth: 150, maxWidth: 200 }}>
           <Typography fontWeight={"bold"} variant="subtitle1">
             Product Name:
           </Typography>
-          <div style={{paddingTop:"8px",paddingBottom:"8px"}}>{data.product ? data.product : "N/A"}</div>
+          <div style={{ paddingTop: "8px", paddingBottom: "8px" }}>
+            {data.product ? data.product : "N/A"}
+          </div>
         </Box>
         <Divider />
         <Box sx={{ minWidth: 150, maxWidth: 200 }}>
           <Typography fontWeight={"bold"} variant="subtitle1">
             Product Brand:
           </Typography>
-          <div style={{paddingTop:"8px",paddingBottom:"8px"}}>{data.brand ? data.brand : "N/A"}</div>
+          <div style={{ paddingTop: "8px", paddingBottom: "8px" }}>
+            {data.brand ? data.brand : "N/A"}
+          </div>
         </Box>
         <Divider />
-        {data.image && (
-          <Box sx={{ minWidth: 150, maxWidth: 200 }}>
-
-            <img
-              src={data.image}
-              alt={data.product}
-              style={{ width: "100%", borderRadius: 8 }}
-            />
-
-          </Box>
-        )}
 
         {data.descriptions?.length > 0 && (
           <>
-
             <Typography fontWeight={"bold"} variant="subtitle1">
               Description:
             </Typography>
 
             <List>
-
               {data.descriptions.map((desc, i) => (
                 <ListItem key={i} sx={{ pl: 2 }}>
                   {desc}
                 </ListItem>
               ))}
-
             </List>
             <Divider />
           </>
@@ -121,7 +113,9 @@ export default function DetailView({ selectedRow, onBack }) {
             <ul style={{ paddingLeft: "1.5rem", marginTop: 0 }}>
               {data.features.map((f, i) => (
                 <li key={i} style={{ marginBottom: "0.5rem" }}>
-                  <Typography variant="body2" component="span">{f}</Typography>
+                  <Typography variant="body2" component="span">
+                    {f}
+                  </Typography>
                 </li>
               ))}
             </ul>
@@ -129,24 +123,19 @@ export default function DetailView({ selectedRow, onBack }) {
           </>
         )}
 
-
         {data.others?.length > 0 && (
           <>
-
             <Typography fontWeight={"bold"} variant="subtitle1">
               Other Info:
             </Typography>
 
             <List>
-
               {data.others.map((o, i) => (
                 <ListItem key={i} sx={{ pl: 2 }}>
                   {o}
                 </ListItem>
               ))}
-
             </List>
-
           </>
         )}
 
@@ -191,14 +180,12 @@ export default function DetailView({ selectedRow, onBack }) {
             </TableContainer>
           </Box>
         ))}
-
       </Box>
     );
   };
 
   return (
     <Box sx={{ p: 3, boxShadow: 4 }}>
-
       <Box
         display="flex"
         justifyContent="space-between"
@@ -224,22 +211,37 @@ export default function DetailView({ selectedRow, onBack }) {
           <Typography color="text.primary">{rowData.product}</Typography>
         </Breadcrumbs>
         <Tooltip title="Translate to Thai">
-
-          <Button variant="outlined" onClick={handleTranslate} disabled={loading}>
+          <Button
+            variant="outlined"
+            onClick={handleTranslate}
+            disabled={loading}
+          >
             {loading ? <CircularProgress size={20} /> : "Translate"}
-            <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0GUdVA-xvlpyTWlcAZYHuK1QmuPnnLzQUmK9Ppq0IGocU6SfuAP8preBl_lpM6VCDX0g&usqp=CAU' alt="flag" style={{ height: 30, background: 'white' }} />
-
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0GUdVA-xvlpyTWlcAZYHuK1QmuPnnLzQUmK9Ppq0IGocU6SfuAP8preBl_lpM6VCDX0g&usqp=CAU"
+              alt="flag"
+              style={{ height: 30, background: "white" }}
+            />
           </Button>
         </Tooltip>
       </Box>
       {loading && <LinearProgress />}
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-      >
-        <Typography marginLeft='150px' marginTop='10px' marginBottom='20px' fontWeight="bold" variant="h6">{rowData.product}</Typography>
-
+      <Box display="flex" flexDirection={"row"} alignItems="center">
+        {rowData.url && (
+          <img
+            src={rowData.url}
+            alt={rowData.product}
+            style={{
+              height: "100px",
+              borderRadius: 8,
+              margin: "16px",
+              width: "100px",
+            }}
+          />
+        )}
+        <Typography fontWeight="bold" variant="h6">
+          {rowData.product}
+        </Typography>
       </Box>
 
       <Box display="flex" flexDirection={{ xs: "column", md: "row" }} gap={4}>
@@ -254,7 +256,6 @@ export default function DetailView({ selectedRow, onBack }) {
 
         {loading && !translatedData ? (
           <Box flex={1}>
-
             <Typography variant="h6" gutterBottom>
               Translating
             </Typography>
@@ -270,13 +271,11 @@ export default function DetailView({ selectedRow, onBack }) {
             <Skeleton variant="text" width="80%" />
             <Skeleton variant="rectangular" height={120} sx={{ mt: 2 }} />
             <Skeleton variant="rectangular" height={120} sx={{ mt: 2 }} />
-
           </Box>
         ) : (
           translatedData && renderDataSection(translatedData[0], "Thai")
         )}
       </Box>
-
     </Box>
   );
 }

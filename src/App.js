@@ -49,7 +49,9 @@ function App() {
     if (!files || files.length === 0) return;
     setLoading(true);
     try {
-      const filePath = `D:/Downloads/Example/${files[0].name}`;
+      // const filePath = `D:/Downloads/Example/${files[0].name}`;
+      const formData = new FormData();
+      formData.append("pdf_file", files[0]);
       const uploadRes = await fetch(
         // "http://127.0.0.1:8000/api/dataextract",
         "https://pdfextractor-bknd-v1-1.onrender.com/api/dataextract",
@@ -58,7 +60,8 @@ function App() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ path: filePath }),
+          // body: JSON.stringify({ path: filePath }),
+          body: formData,
         }
       );
 

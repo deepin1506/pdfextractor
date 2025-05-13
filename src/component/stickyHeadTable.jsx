@@ -13,6 +13,27 @@ import { useState } from "react";
 
 const columns = [
   {
+    id: "thumbnail",
+    label: "Thumbnail",
+    minWidth: 170,
+    render: (row) =>
+      row.url ? (
+        <img
+          src={row.url}
+          alt="Thumbnail"
+          style={{
+            width: 60,
+            height: 60,
+            objectFit: "contain",
+            borderRadius: 4,
+          }}
+        />
+      ) : (
+        "N/A"
+      ),
+  },
+
+  {
     id: "productnumber",
     label: "Product#",
     minWidth: 170,
@@ -43,7 +64,7 @@ export default function StickyHeadTable({ rows }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [selectedRow, setSelectedRow] = useState(null);
-
+  console.log("dm rows =>", rows);
   const handleChangePage = (event, newPage) => setPage(newPage);
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
