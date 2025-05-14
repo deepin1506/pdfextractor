@@ -16,7 +16,7 @@ function App() {
       setLoading(true);
       // const res = await fetch("http://127.0.0.1:8000/api/datagetall", {
       const res = await fetch(
-        "https://pdfextractor-bknd-v1-1.onrender.com/api/datagetall",
+        "https://pdfextractor-bknd-v1-2.onrender.com/api/datagetall",
         {
           method: "POST",
           headers: {
@@ -49,16 +49,18 @@ function App() {
     if (!files || files.length === 0) return;
 
     setLoading(true);
-    const formData = new FormData();
-    formData.append("pdf_file", files[0]);
+   
 
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}:`, value);
-    }
+    // for (let [key, value] of formData.entries()) {
+    //   console.log(`${key}:`, value);
+    // }
 
     try {
+      const formData = new FormData();
+    formData.append("pdf_file", files[0]);
       const uploadRes = await fetch(
-        "https://pdfextractor-bknd-v1-1.onrender.com/api/dataextract",
+        "https://pdfextractor-bknd-v1-2.onrender.com/api/dataextract",
+        // "http://127.0.0.1:8000/api/dataextract",
         {
           method: "POST",
           body: formData,
