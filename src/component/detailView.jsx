@@ -29,6 +29,7 @@ export default function DetailView({ selectedRow, onBack }) {
   // const originalData = selectedRow[0];
   const rowData = selectedRow[0];
   const originalData = [rowData];
+  // console.log("json original",JSON.stringify(rowData))
   const handleTranslate = async () => {
     setLoading(true);
     try {
@@ -38,12 +39,14 @@ export default function DetailView({ selectedRow, onBack }) {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(originalData),
+          body: JSON.stringify(rowData),
+          // body:originalData
         }
       );
       const result = await response.json();
-      console.log("result", result);
-      setTranslatedData(result);
+      // console.log("result", result);
+      
+      setTranslatedData([result]);
     } catch (error) {
       console.error("Translation failed:", error);
     } finally {
@@ -68,7 +71,7 @@ export default function DetailView({ selectedRow, onBack }) {
 
   const renderDataSection = (data, title) => {
     if (!data) return null;
-    console.log("dm data =>", data);
+    // console.log("dm data =>", data);
     return (
       <Box sx={{ flex: 1, px: 2 }}>
         {/* <Typography fontWeight={"bold"} variant="h5" gutterBottom>
