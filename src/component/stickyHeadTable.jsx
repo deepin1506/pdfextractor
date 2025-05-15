@@ -7,11 +7,32 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  Box,
+  Tooltip
 } from "@mui/material";
+import DownloadIcon from '@mui/icons-material/Download';
 import DetailView from "./detailView";
 import { useState } from "react";
 
 const columns = [
+  {
+    id: 'download',
+    label: 'Action',
+    // minWidth: 50,
+    width: 50,
+    render: (row) => (
+      <Tooltip title="Download JSON">
+        <DownloadIcon variant="contained"
+          size="small"
+          color="primary"
+          aria-label="download JSON"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleDownload(row);
+          }}
+        /></Tooltip>
+    ),
+  },
   {
     id: "thumbnail",
     label: "Thumbnail",
@@ -57,8 +78,23 @@ const columns = [
     label: "Features",
     minWidth: 170,
     render: (row) => row.features?.slice(0, 2).join(", ") + "..." || "-",
-  },
+  }
 ];
+
+const handleDownload = (rowData) => {
+  // console.log(row)
+  const jsonStr = JSON.stringify(rowData, null, 2); // pretty-print JSON
+  const blob = new Blob([jsonStr], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `${rowData.product || 'data'}.json`; // fallback filename
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url); // cleanup
+};
 
 export default function StickyHeadTable({ rows }) {
   const [page, setPage] = useState(0);
@@ -112,7 +148,7 @@ export default function StickyHeadTable({ rows }) {
       ) : (
         <>
           {/* <div style={{ height: '100vh', width: '100vw', padding: 16, boxSizing: 'border-box' }}> */}
-          <TableContainer sx={{ maxHeight: 600 }}>
+          <TableContainer sx={{ maxHeight: 600}}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
