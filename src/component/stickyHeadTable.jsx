@@ -8,21 +8,22 @@ import {
   TablePagination,
   TableRow,
   Box,
-  Tooltip
+  Tooltip,
 } from "@mui/material";
-import DownloadIcon from '@mui/icons-material/Download';
+import DownloadIcon from "@mui/icons-material/Download";
 import DetailView from "./detailView";
 import { useState } from "react";
 
 const columns = [
   {
-    id: 'download',
-    label: 'Action',
+    id: "download",
+    label: "Action",
     // minWidth: 50,
-    width: 50,
+    width: 40,
     render: (row) => (
       <Tooltip title="Download JSON">
-        <DownloadIcon variant="contained"
+        <DownloadIcon
+          variant="contained"
           size="small"
           color="primary"
           aria-label="download JSON"
@@ -30,13 +31,14 @@ const columns = [
             e.stopPropagation();
             handleDownload(row);
           }}
-        /></Tooltip>
+        />
+      </Tooltip>
     ),
   },
   {
     id: "thumbnail",
     label: "Thumbnail",
-    minWidth: 170,
+    minWidth: 100,
     render: (row) =>
       row.url ? (
         <img
@@ -57,39 +59,39 @@ const columns = [
   {
     id: "productnumber",
     label: "Product#",
-    minWidth: 170,
+    minWidth: 100,
     render: (row) => (row.productnumber ? row.productnumber : "N/A"),
   },
   { id: "product", label: "Product Name", minWidth: 170 },
   {
     id: "brand",
     label: "Brand",
-    minWidth: 170,
+    minWidth: 120,
     render: (row) => (row.brand ? row.brand : "N/A"),
   },
   {
     id: "descriptions",
     label: "Short Description",
-    minWidth: 100,
+    minWidth: 400,
     render: (row) => row.descriptions?.[0] || "-",
   },
   {
     id: "features",
     label: "Features",
-    minWidth: 170,
+    minWidth: 260,
     render: (row) => row.features?.slice(0, 2).join(", ") + "..." || "-",
-  }
+  },
 ];
 
 const handleDownload = (rowData) => {
   // console.log(row)
   const jsonStr = JSON.stringify(rowData, null, 2); // pretty-print JSON
-  const blob = new Blob([jsonStr], { type: 'application/json' });
+  const blob = new Blob([jsonStr], { type: "application/json" });
   const url = URL.createObjectURL(blob);
 
-  const link = document.createElement('a');
+  const link = document.createElement("a");
   link.href = url;
-  link.download = `${rowData.product || 'data'}.json`; // fallback filename
+  link.download = `${rowData.product || "data"}.json`; // fallback filename
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -148,7 +150,15 @@ export default function StickyHeadTable({ rows }) {
       ) : (
         <>
           {/* <div style={{ height: '100vh', width: '100vw', padding: 16, boxSizing: 'border-box' }}> */}
-          <TableContainer sx={{ maxHeight: 600}}>
+          <TableContainer
+            sx={{
+              maxHeight: "80vh",
+              overflowY: "auto",
+              // width: "100vw", // Full viewport width
+              padding: 2,
+              boxSizing: "border-box",
+            }}
+          >
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>

@@ -26,13 +26,17 @@ const VisuallyHiddenInput = styled("input")({
 
 const TopNav = ({ onUpload }) => {
   return (
-    <AppBar position="sticky">
+    <AppBar position="fixed">
       <Toolbar>
-        <IconButton color="inherit" aria-label="home">
+        {/* <IconButton color="inherit" aria-label="home">
           <HomeIcon />
-        </IconButton>
-        PDF Extractor
-        {/* <img src="https://www.mama.co.th/en/images/logo-TF.png" alt="logo" style={{ height: 40,background: 'white', marginRight: 16 }} /> */}
+        </IconButton> */}
+        {/* PDF Extractor */}
+        <img
+          src="https://www.sisthai.com/sis/images/sis_logo.gif"
+          alt="logo"
+          style={{ height: 40, background: "white", marginRight: 16 }}
+        />
         <Box sx={{ flexGrow: 1 }} />
         <Button
           component="label"

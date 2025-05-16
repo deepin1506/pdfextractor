@@ -19,7 +19,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import { NavigateNext } from "@mui/icons-material";
-import DownloadIcon from '@mui/icons-material/Download';
+import DownloadIcon from "@mui/icons-material/Download";
 
 export default function DetailView({ selectedRow, onBack }) {
   const [translatedData, setTranslatedData] = useState(null);
@@ -45,7 +45,7 @@ export default function DetailView({ selectedRow, onBack }) {
       );
       const result = await response.json();
       // console.log("result", result);
-      
+
       setTranslatedData([result]);
     } catch (error) {
       console.error("Translation failed:", error);
@@ -57,12 +57,12 @@ export default function DetailView({ selectedRow, onBack }) {
   const handleDownload = (rowData) => {
     // console.log(row)
     const jsonStr = JSON.stringify(rowData, null, 2); // pretty-print JSON
-    const blob = new Blob([jsonStr], { type: 'application/json' });
+    const blob = new Blob([jsonStr], { type: "application/json" });
     const url = URL.createObjectURL(blob);
 
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = url;
-    link.download = `${rowData.product || 'data'}.json`; // fallback filename
+    link.download = `${rowData.product || "data"}.json`; // fallback filename
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -234,7 +234,7 @@ export default function DetailView({ selectedRow, onBack }) {
             variant="outlined"
             onClick={handleTranslate}
             disabled={loading}
-            style={{ marginLeft: "500px", fontSize: 12 }}
+            style={{ marginLeft: "auto", fontSize: 12, marginRight: 3 }}
           >
             {loading ? <CircularProgress size={20} /> : "Translate"}
             <img
@@ -245,11 +245,14 @@ export default function DetailView({ selectedRow, onBack }) {
           </Button>
         </Tooltip>
         <Tooltip title="Download JSON">
-
-          <Button variant="outlined" style={{ fontSize: 12 }} onClick={(e) => {
-            // e.stopPropagation();
-            handleDownload(rowData);
-          }}>
+          <Button
+            variant="outlined"
+            style={{ fontSize: 12 }}
+            onClick={(e) => {
+              // e.stopPropagation();
+              handleDownload(rowData);
+            }}
+          >
             Download
             <img
               src="https://cdn.iconscout.com/icon/free/png-256/free-json-file-icon-download-in-svg-png-gif-formats--format-website-pack-files-folders-icons-504451.png"

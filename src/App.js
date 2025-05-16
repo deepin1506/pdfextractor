@@ -49,7 +49,6 @@ function App() {
     if (!files || files.length === 0) return;
 
     setLoading(true);
-   
 
     // for (let [key, value] of formData.entries()) {
     //   console.log(`${key}:`, value);
@@ -57,7 +56,7 @@ function App() {
 
     try {
       const formData = new FormData();
-    formData.append("pdf_file", files[0]);
+      formData.append("pdf_file", files[0]);
       const uploadRes = await fetch(
         "https://pdfextractor-bknd-v1-2.onrender.com/api/dataextract",
         // "http://127.0.0.1:8000/api/dataextract",
@@ -85,9 +84,9 @@ function App() {
     <>
             <CssBaseline />
             <TopNav onUpload={handleFileUpload} />     
-      {loading && <LinearProgress />}
-      <Container sx={{ mt: 4 }}>
-                <StickyHeadTable rows={tableData} />     
+      {loading && <LinearProgress sx={{ mt: 8 }} />}
+      <Container sx={{ p: 5 }} disableGutters maxWidth={false}>
+        <StickyHeadTable rows={tableData} />
       </Container>
          
     </>
